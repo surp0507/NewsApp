@@ -1,0 +1,3 @@
+export const SET_ALL_NEWS="SET_ALL_NEWS"
+export const SET_HEADLINES="SET_HEADLINES"
+export const SET_SEARCH_VALUE="SET_SEARCH_VALUE"
