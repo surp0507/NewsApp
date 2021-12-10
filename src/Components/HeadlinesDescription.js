@@ -10,6 +10,7 @@ export default function HeadlinesDescription() {
     <div>
       <h2 className="text-center"> News Details </h2>
       <ul className="list-group">
+        <img src={headlines[id].urlToImage} alt="" className="text-center" style={{maxWidth:"50%"}}/>
         <li>{headlines[id].description}</li>
       </ul>
     </div>

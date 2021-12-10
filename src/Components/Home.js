@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Card } from "react-bootstrap";
 import { requestAllNews } from "../thunk/requestAllNews";
+import { setBookMark } from "../redux/action/index";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { setSearchValue } from "../redux/action/index";
+import { setCheckBox } from "../redux/action/index";
 import { requestHeadlines } from "../thunk/requestHeadlines";
 export default function Home() {
   const headlines = useSelector((state) => state.headlinesReducer.headlines);
+  const checkbox = useSelector((state) => state.headlinesReducer.checkbox);
+  const bookmark = useSelector((state) => state.headlinesReducer.bookmark);
   const news = useSelector((state) => state.searchNewsReducer.news);
   const search = useSelector((state) => state.searchNewsReducer.search);
-  console.log(headlines);
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(requestHeadlines());
   }, []);
@@ -25,6 +28,13 @@ export default function Home() {
     dispatch(requestAllNews(search));
   };
 
+  const handleCheck = (data) => {
+    alert("added to bookmark");
+    dispatch(setCheckBox(true));
+    dispatch(setBookMark([...bookmark, data]));
+    localStorage.setItem("bookmark", JSON.stringify(bookmark));
+  };
+
   return (
     <div>
       <Navbar bg="primary" variant="dark">
@@ -35,31 +45,50 @@ export default function Home() {
                 type="text"
                 placeholder="search-news"
                 onChange={handleChange}
+                className="text-center"
               />
               <Button
-                className="mx-2 bg-info btn btn-sm"
+                className="mx-2 bg-info btn btn-sm text-dark"
                 onClick={handleSubmit}
               >
                 search
               </Button>
             </div>
           </Nav>
+          <div className="text-r">
+            <Link
+              to="/bookmark"
+              className="btn-info btn-sm text-decoration-none"
+            >
+              Check Bookmar
+            </Link>
+          </div>
         </Container>
       </Navbar>
       <div className="container">
+        <h3 className="text-center">News Headlines</h3>
         <ul className="list-group">
           {news.map((data, index) => (
             <>
-              <li className="list-group-item text-danger" key={index}>
-                author:- {data.author}
-              </li>
-              <Link
-                className="text-decoration-none"
-                to={`/description/${index}`}
-              >
-                <span className="text-dark">Title:-</span>
-                {data.title}
-              </Link>
+              <Card style={{ width: "18rem" }}>
+                <Card.Img variant="top" src={data.urlToImage} />
+                <Card.Body>
+                  <Card.Title>Card Title</Card.Title>
+                  <Card.Text>
+                    <li className="list-group-item text-danger" key={index}>
+                      author:- {data.author}
+                    </li>
+                    <Link
+                      className="text-decoration-none text-dark"
+                      to={`/description/${index}`}
+                    >
+                      <span className="text-dark">Title:-</span>
+                      <h4>{data.title}</h4>{" "}
+                      <span className="text-primary">Read more...</span>
+                    </Link>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
             </>
           ))}
         </ul>
@@ -71,11 +100,19 @@ export default function Home() {
             <li key={index} className="text-danger">
               Author:-{item.author}
             </li>
+            <div className="mx-auto">
+              <span className="text-danger mx-2">Add to Bookmark</span>
+              <input type="checkbox" onChange={() => handleCheck(item)} />
+            </div>
+            <img src={item.urlToImage} alt="img" srcset="" />
+
             <Link
               to={`/articles/${index}`}
               className="text-decoration-none text-dark list-group-item"
             >
-              Title:- {item.title}
+              <h3>
+                {item.title} <span className="text-primary">Read more...</span>
+              </h3>
             </Link>
           </ul>
         </>

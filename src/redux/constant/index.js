@@ -1,3 +1,5 @@
 export const SET_ALL_NEWS="SET_ALL_NEWS"
 export const SET_HEADLINES="SET_HEADLINES"
 export const SET_SEARCH_VALUE="SET_SEARCH_VALUE"
+export const SET_CHECK_BOX="SET_CHECK_BOX"
+export const SET_BOOK_MARK="SET_BOOK_MARK"
