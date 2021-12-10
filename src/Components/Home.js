@@ -54,8 +54,8 @@ export default function Home() {
                 search
               </Button>
             </div>
-          </Nav>
-          <div className="text-r">
+         </Nav>
+         <div className="text-right">
             <Link
               to="/bookmark"
               className="btn-info btn-sm text-decoration-none"
@@ -66,14 +66,16 @@ export default function Home() {
         </Container>
       </Navbar>
       <div className="container">
-        <h3 className="text-center">News Headlines</h3>
+        <marquee width="60%" direction="left">
+          <h3 className="py-3 ">News Headlines</h3>
+        </marquee>
         <ul className="list-group">
           {news.map((data, index) => (
             <>
               <Card style={{ width: "18rem" }}>
                 <Card.Img variant="top" src={data.urlToImage} />
                 <Card.Body>
-                  <Card.Title>Card Title</Card.Title>
+                  <Card.Title className="text-center">Breaking News</Card.Title>
                   <Card.Text>
                     <li className="list-group-item text-danger" key={index}>
                       author:- {data.author}
@@ -82,7 +84,7 @@ export default function Home() {
                       className="text-decoration-none text-dark"
                       to={`/description/${index}`}
                     >
-                      <span className="text-dark">Title:-</span>
+                      <span className="text-dark"></span>
                       <h4>{data.title}</h4>{" "}
                       <span className="text-primary">Read more...</span>
                     </Link>
@@ -104,15 +106,20 @@ export default function Home() {
               <span className="text-danger mx-2">Add to Bookmark</span>
               <input type="checkbox" onChange={() => handleCheck(item)} />
             </div>
-            <img src={item.urlToImage} alt="img" srcset="" />
+            <img
+              src={item.urlToImage}
+              alt="img"
+              srcset=""
+              style={{ maxWidth: "50%" }}
+            />
 
             <Link
               to={`/articles/${index}`}
               className="text-decoration-none text-dark list-group-item"
             >
-              <h3>
+              <h5>
                 {item.title} <span className="text-primary">Read more...</span>
-              </h3>
+              </h5>
             </Link>
           </ul>
         </>

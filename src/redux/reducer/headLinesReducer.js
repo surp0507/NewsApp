@@ -1,10 +1,12 @@
 import { SET_HEADLINES } from "../constant";
 import { SET_CHECK_BOX } from "../constant";
 import { SET_BOOK_MARK } from "../constant/index";
+
+const bookmark=JSON.parse(localStorage.getItem("bookmark"))
 const initialState = {
   headlines: [],
   checkbox: false,
-  bookmark: [],
+  bookmark: [bookmark],
 };
 
 const headlinesReducer = (state = initialState, action) => {
